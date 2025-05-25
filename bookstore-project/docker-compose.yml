@@ -8,6 +8,15 @@ services:
     networks:
       - bookstore-net
 
+  logic:
+    build:
+      context: ./logic
+    container_name: logic
+    ports:
+      - "3002:3002"
+    networks:
+      - bookstore-net
+
 networks:
   bookstore-net:
     driver: bridge
