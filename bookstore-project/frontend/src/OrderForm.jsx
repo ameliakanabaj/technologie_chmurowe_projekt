@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './OrderForm.css';
 
 function OrderForm() {
   const [amount, setAmount] = useState('');
@@ -32,9 +33,9 @@ function OrderForm() {
       </form>
 
       {result && (
-        <div>
-          <p>Kwota oryginalna: {result.original}</p>
-          <p>Kwota po rabacie: {result.final}</p>
+        <div className='final-price'>
+            <p>Kwota oryginalna: {Number(result.original).toFixed(2)} zł</p>
+            <p>Kwota po rabacie: {Number(result.final).toFixed(2)} zł</p>
         </div>
       )}
     </div>

@@ -2,8 +2,10 @@ import OrderForm from './OrderForm';
 
 function App() {
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Bookstore</h1>
+    <div className='app-container'>
+      <div className='bookstore-container'>
+        <h1>Bookstore</h1>
+      </div>
       <OrderForm />
     </div>
   );

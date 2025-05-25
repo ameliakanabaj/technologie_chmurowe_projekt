@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -65,4 +65,32 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+} */
+
+body {
+  margin: 0;
+  background-color: rgb(252, 245, 214);
+}
+
+.app-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.bookstore-container {
+  background-color: rgb(255, 239, 170);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  top: 0;
+  margin: 0;
+  width: 100%;
+}
+
+h1 {
+  text-transform: uppercase;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  letter-spacing: 2px;
+  color: rgb(255, 248, 123);
+  text-shadow: 3px 2px 1px pink;
 }

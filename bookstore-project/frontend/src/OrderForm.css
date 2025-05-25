@@ -1,0 +1,42 @@
+div {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+div h2 {
+  color: pink;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+div button {
+  background: linear-gradient(to right, pink, rgb(255, 150, 168));
+  color: white;
+  border: 1px solid pink;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  margin-left: 4px;
+}
+div button:hover {
+  background: linear-gradient(to right, rgb(251, 130, 150), rgb(247, 103, 127));
+  transform: translateY(2px);
+}
+div input {
+  border: 1px solid pink;
+  border-radius: 0.75rem;
+  padding: 12px 20px;
+  margin-right: 4px;
+  font-size: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+div .final-price {
+  color: pink;
+  font-weight: 900;
+  text-shadow: 1px 1px 8px pink;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}/*# sourceMappingURL=OrderForm.css.map */
