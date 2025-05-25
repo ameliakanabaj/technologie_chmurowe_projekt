@@ -1,5 +1,6 @@
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const PORT = 3001;
 const { Client } = require('pg');
@@ -22,7 +23,7 @@ async function connectWithRetry() {
   
 setTimeout(connectWithRetry, 7000);
   
-
+app.use(cors());
 app.use(express.json());
 
 app.post('/orders', async (req, res) => {

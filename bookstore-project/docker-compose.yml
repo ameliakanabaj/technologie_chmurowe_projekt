@@ -35,6 +35,15 @@ services:
     networks:
       - bookstore-net
 
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+    networks:
+      - bookstore-net
+
 networks:
   bookstore-net:
     driver: bridge
