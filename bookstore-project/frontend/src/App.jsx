@@ -1,4 +1,4 @@
-import OrderForm from './OrderForm';
+import Bookstore from './Bookstore';
 
 function App() {
   return (
@@ -6,7 +6,7 @@ function App() {
       <div className='bookstore-container'>
         <h1>Bookstore</h1>
       </div>
-      <OrderForm />
+      <Bookstore />
     </div>
   );
 }
