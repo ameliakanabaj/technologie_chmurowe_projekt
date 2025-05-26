@@ -16,23 +16,24 @@ function Bookstore() {
   const addToCart = (book) => {
     setCart([...cart, book]);
     setResponse(null);
+    localStorage.setItem('cart', JSON.stringify([...cart, book]));
   };
 
-  const getTotal = () => {
-    return cart.reduce((sum, b) => sum + b.price, 0);
-  };
+//   const getTotal = () => {
+//     return cart.reduce((sum, b) => sum + b.price, 0);
+//   };
 
-  const handleOrder = async () => {
-    const amount = getTotal();
-    const res = await fetch('http://localhost:3001/orders', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount }),
-    });
-    const data = await res.json();
-    setResponse(data);
-    setCart([]); 
-  };
+//   const handleOrder = async () => {
+//     const amount = getTotal();
+//     const res = await fetch('http://localhost:3001/orders', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({ amount }),
+//     });
+//     const data = await res.json();
+//     setResponse(data);
+//     setCart([]); 
+//   };
 
   return (
     <div className='bookstore'>
@@ -49,32 +50,6 @@ function Bookstore() {
           </li>
         ))}
       </ul>
-
-      <h2>Koszyk:</h2>
-      {cart.length === 0 ? (
-        <p>Twój koszyk jest pusty</p>
-      ) : (
-        <>
-          <ul>
-            {cart.map((book, index) => (
-              <li key={index}>
-                {book.title} — {book.price.toFixed(2)} zł
-              </li>
-            ))}
-          </ul>
-          <p>Suma: {getTotal().toFixed(2)} zł</p>
-          <button onClick={handleOrder} className="button-modern">
-            Zamów
-          </button>
-        </>
-      )}
-
-      {response && (
-        <div className="final-price">
-          <p>Kwota oryginalna: {Number(response.original).toFixed(2)} zł</p>
-          <p>Kwota po rabacie: {Number(response.final).toFixed(2)} zł</p>
-        </div>
-      )}
     </div>
   );
 }

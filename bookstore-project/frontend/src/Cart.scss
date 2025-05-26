@@ -1,0 +1,54 @@
+.cart {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  
+    h2 {
+      color: pink;
+      margin-bottom: 1rem;
+    }
+  
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        margin-bottom: 0.5rem;
+        font-size: 16px;
+      }
+    }
+  
+    p {
+      margin: 0.3rem 0;
+      font-size: 16px;
+    }
+  
+    button {
+      background: linear-gradient(to right, pink, rgb(255, 150, 168));
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+      margin-top: 1rem;
+    }
+  
+    button:hover {
+      background: linear-gradient(to right, rgb(251, 130, 150), rgb(247, 103, 127));
+      transform: translateY(2px);
+    }
+  
+    .final-price {
+      margin-top: 1.5rem;
+      color: pink;
+      font-weight: 900;
+      text-shadow: 1px 1px 8px pink;
+      text-align: center;
+    }
+  }
+  
