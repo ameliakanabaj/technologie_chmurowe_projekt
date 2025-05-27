@@ -1,6 +1,6 @@
 # Bookstore Microservices Project
 
-Projekt stworzony w ramach przedmiotu Technologie Chmurowe\_ – aplikacja mikroserwisowa zbudowana z wykorzystaniem **Docker Compose**.
+Projekt stworzony w ramach przedmiotu Technologie Chmurowe – aplikacja mikroserwisowa zbudowana z wykorzystaniem **Docker Compose**.
 
 ---
 
@@ -33,7 +33,7 @@ Aplikacja składa się z czterech głównych komponentów:
 ### 2. Klonowanie repozytorium
 
 ```bash
-git clone https://github.com/twoje_uzytkownik/bookstore-project.git
+git clone https://github.com/ameliakanabaj/technologie_chmurowe_projekt.git
 cd bookstore-project
 ```
 

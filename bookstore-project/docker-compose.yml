@@ -10,6 +10,11 @@ services:
       - "3001:3001"
     networks:
       - bookstore-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   logic:
     build:
@@ -34,6 +39,11 @@ services:
       - "15432:5432"
     networks:
       - bookstore-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   frontend:
     build:
