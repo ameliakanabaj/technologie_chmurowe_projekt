@@ -27,33 +27,37 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/orders', async (req, res) => {
-    const { amount } = req.body;
+    const { books } = req.body;
+  
+    const titles = books.map(b => b.title);
+    const amount = books.reduce((sum, b) => sum + b.price, 0);
   
     try {
-        const fetchResponse = await fetch('http://logic:3002/calculate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount }),
-        });
+      const fetchResponse = await fetch('http://logic:3002/calculate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount }),
+      });
   
-        const result = await fetchResponse.json();
-    
-        await db.query(
-            'INSERT INTO orders (original_amount, final_amount) VALUES ($1, $2)',
-            [result.original, result.final]
-        );
-    
-        res.json({
-            message: 'Zamówienie przetworzone i zapisane',
-            original: result.original,
-            final: result.final,
-        });
+      const result = await fetchResponse.json();
+  
+      await db.query(
+        'INSERT INTO orders (titles, original_amount, final_amount) VALUES ($1, $2, $3)',
+        [titles, result.original, result.final]
+      );
+  
+      res.json({
+        message: 'Zamówienie zapisane',
+        titles,
+        original: result.original,
+        final: result.final,
+      });
     } catch (error) {
-        console.error('Błąd:', error.message);
-        res.status(500).json({ error: 'Błąd podczas przetwarzania zamówienia' });
+      console.error('Błąd przy zamówieniu:', error);
+      res.status(500).json({ error: 'Błąd podczas przetwarzania zamówienia' });
     }
-  });
-
+});
+  
 app.get('/orders', async (req, res) => {
     const result = await db.query('SELECT * FROM orders');
     res.json(result.rows);

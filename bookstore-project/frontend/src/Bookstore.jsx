@@ -11,29 +11,16 @@ const books = [
 
 function Bookstore() {
   const [cart, setCart] = useState([]);
-  const [response, setResponse] = useState(null);
+  const [added, setAdded] = useState(null);
 
   const addToCart = (book) => {
     setCart([...cart, book]);
-    setResponse(null);
     localStorage.setItem('cart', JSON.stringify([...cart, book]));
+    setAdded(book.id);
+    setTimeout(() => {
+        setAdded(null);
+    }, 5000);
   };
-
-//   const getTotal = () => {
-//     return cart.reduce((sum, b) => sum + b.price, 0);
-//   };
-
-//   const handleOrder = async () => {
-//     const amount = getTotal();
-//     const res = await fetch('http://localhost:3001/orders', {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({ amount }),
-//     });
-//     const data = await res.json();
-//     setResponse(data);
-//     setCart([]); 
-//   };
 
   return (
     <div className='bookstore'>
@@ -42,11 +29,14 @@ function Bookstore() {
         {books.map(book => (
           <li key={book.id} >
             <b>{book.title} — {book.price.toFixed(2)} zł</b>
-            <button
-              onClick={() => addToCart(book)}
-            >
-              Dodaj do koszyka
-            </button>
+            <div className='add'>
+                <button onClick={() => addToCart(book)}>
+                Dodaj do koszyka
+                </button>
+                {added === book.id && (
+                    <div>dodano</div>
+                )}
+            </div>
           </li>
         ))}
       </ul>

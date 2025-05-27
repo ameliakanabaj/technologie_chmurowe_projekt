@@ -24,17 +24,18 @@ function Cart() {
   };
 
   const handleOrder = async () => {
-    const amount = getTotal();
     const res = await fetch('http://localhost:3001/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount }),
+      body: JSON.stringify({ books: cart }), 
     });
+  
     const data = await res.json();
     setResponse(data);
-    setCart([]); 
+    setCart([]);
     localStorage.removeItem('cart');
   };
+  
 
   return (
         <div className='cart'>

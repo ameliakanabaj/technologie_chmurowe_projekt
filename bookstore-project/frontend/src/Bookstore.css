@@ -47,4 +47,21 @@
 }
 .bookstore p {
   margin: 0.3rem 0;
+}
+.bookstore .add {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.bookstore .add button {
+  grid-column: 1;
+}
+.bookstore .add div {
+  grid-column: 2;
+  margin-left: 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: pink;
+  font-size: 1rem;
+  font-weight: 600;
 }/*# sourceMappingURL=Bookstore.css.map */
