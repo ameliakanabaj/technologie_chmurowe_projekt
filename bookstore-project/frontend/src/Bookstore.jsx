@@ -24,22 +24,23 @@ function Bookstore() {
 
   return (
     <div className='bookstore'>
-      <h2>Książki:</h2>
-      <ul>
-        {books.map(book => (
-          <li key={book.id} >
-            <b>{book.title} — {book.price.toFixed(2)} zł</b>
-            <div className='add'>
-                <button onClick={() => addToCart(book)}>
-                Dodaj do koszyka
-                </button>
-                {added === book.id && (
-                    <div>dodano</div>
-                )}
-            </div>
-          </li>
-        ))}
-      </ul>
+        <div>RABAT 10%: Powyżej zamówienia o wartości 100zł</div>
+        <h2>Książki:</h2>
+        <ul>
+            {books.map(book => (
+            <li key={book.id} >
+                <b>{book.title} — {book.price.toFixed(2)} zł</b>
+                <div className='add'>
+                    <button onClick={() => addToCart(book)}>
+                    Dodaj do koszyka
+                    </button>
+                    {added === book.id && (
+                        <div>dodano</div>
+                    )}
+                </div>
+            </li>
+            ))}
+        </ul>
     </div>
   );
 }
