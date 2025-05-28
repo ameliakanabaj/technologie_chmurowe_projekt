@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logic
+  template:
+    metadata:
+      labels:
+        app: logic
+    spec:
+      containers:
+        - name: logic
+          image: logic:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3002
