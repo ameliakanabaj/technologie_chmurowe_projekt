@@ -5,7 +5,7 @@ function OrdersList() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3001/orders')
+    fetch('http://localhost:30081/orders')
       .then(res => res.json())
       .then(data => setOrders(data))
       .catch(err => console.error('Błąd podczas pobierania zamówień:', err));

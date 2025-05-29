@@ -13,7 +13,7 @@ spec:
         app: db
     spec:
       containers:
-        - name: postgres
+        - name: db
           image: postgres:15
           ports:
             - containerPort: 5432
@@ -25,9 +25,10 @@ spec:
             - name: POSTGRES_DB
               value: bookstore
           volumeMounts:
-            - name: postgres-storage
-              mountPath: /var/lib/postgresql/data
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d/init.sql
+              subPath: init.sql
       volumes:
-        - name: postgres-storage
-          persistentVolumeClaim:
-            claimName: postgres-pvc
+        - name: init-script
+          configMap:
+            name: db-init-script
