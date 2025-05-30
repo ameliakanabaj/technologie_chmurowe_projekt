@@ -1,0 +1,11 @@
+Odpalanie frontendu:
+budowanie obrazu (w katalogu frontend):
+
+docker build -t frontend:latest .
+
+Restart serwera:
+
+kubectl rollout restart deployment frontend
+
+Adres frontendu:
+http://localhost:30080
