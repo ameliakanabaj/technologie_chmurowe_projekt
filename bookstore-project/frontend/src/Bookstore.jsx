@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Bookstore.css';
 
 const books = [
@@ -12,6 +12,13 @@ const books = [
 function Bookstore() {
   const [cart, setCart] = useState([]);
   const [added, setAdded] = useState(null);
+
+  useEffect(() => {
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      setCart(JSON.parse(storedCart));
+    }
+  }, []);
 
   const addToCart = (book) => {
     setCart([...cart, book]);
