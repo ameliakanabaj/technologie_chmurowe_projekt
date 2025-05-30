@@ -28,7 +28,12 @@ spec:
             - name: init-script
               mountPath: /docker-entrypoint-initdb.d/init.sql
               subPath: init.sql
+            - name: db-storage
+              mountPath: /var/lib/postgresql/data
       volumes:
         - name: init-script
           configMap:
             name: db-init-script
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: db-pvc
