@@ -27,3 +27,8 @@ spec:
               value: postgres
             - name: PGDATABASE
               value: bookstore
+          resources:
+            requests:
+              cpu: "100m"
+            limits:
+              cpu: "300m"
