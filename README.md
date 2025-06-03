@@ -1,34 +1,39 @@
-# Bookstore Microservices Project
+# Bookstore Microservices Project – Etap II (Kubernetes)
 
-Projekt stworzony w ramach przedmiotu Technologie Chmurowe – aplikacja mikroserwisowa zbudowana z wykorzystaniem **Docker Compose**.
+Projekt zrealizowany w ramach przedmiotu Technologie Chmurowe – **migracja aplikacji mikroserwisowej do Kubernetes**.
 
 ---
 
 ## Architektura
 
-Aplikacja składa się z czterech głównych komponentów:
+Aplikacja składa się z następujących komponentów:
 
-- **Frontend (React + Vite)** – aplikacja webowa z koszykiem, zamawianiem i historią zamówień.
-- **API (Node.js + Express)** – obsługuje logikę zamówień i zapisuje dane do bazy.
-- **Logic (Node.js + Express)** – mikroserwis odpowiedzialny za naliczanie rabatu.
-- **Baza danych (PostgreSQL)** – trwałe przechowywanie danych o zamówieniach.
+- **Frontend** (React + Vite)
+- **API** (Node.js + Express)
+- **Logic** (Node.js + Express)
+- **PostgreSQL** – baza danych
 
----
-
-## Komunikacja
-
-- Frontend ↔ API – przez `fetch` (REST)
-- API ↔ Logic – przez `fetch` (REST)
-- API ↔ PostgreSQL – przez `pg` (Node.js)
+Każdy z mikroserwisów jest uruchamiany jako osobny Deployment i Service w Kubernetes.
 
 ---
 
-## Uruchomienie projektu
+## Kluczowe zasoby Kubernetes
+
+- **Deployment** – dla frontend, api, logic, db
+- **Service (ClusterIP / NodePort)** – zapewnia komunikację wewnętrzną i zewnętrzną
+- **PersistentVolume & PersistentVolumeClaim** – trwałe przechowywanie danych PostgreSQL
+- **ConfigMap** – skrypt inicjalizujący bazę danych
+- **Ingress + Ingress Controller (NGINX)** – umożliwia dostęp do aplikacji przez `bookstore.local`
+- **Horizontal Pod Autoscaler (HPA)** – automatyczne skalowanie API na podstawie użycia CPU
+
+---
+
+## Uruchamianie aplikacji
 
 ### 1. Wymagania
 
-- Docker
-- Docker Compose
+- Minikube lub klaster K8s (lokalny)
+- kubectl
 
 ### 2. Klonowanie repozytorium
 
@@ -37,56 +42,86 @@ git clone https://github.com/ameliakanabaj/technologie_chmurowe_projekt.git
 cd bookstore-project
 ```
 
-### 3. Uruchomienie aplikacji
+### 3. Aplikacja Kubernetes
+
+Stosuj kolejność:
 
 ```bash
-docker compose up --build
+kubectl apply -f k8s/db-configmap.yaml
+kubectl apply -f k8s/db-pv.yaml
+kubectl apply -f k8s/db-pvc.yaml
+kubectl apply -f k8s/db-deployment.yaml
+
+kubectl apply -f k8s/api-deployment.yaml
+kubectl apply -f k8s/logic-deployment.yaml
+kubectl apply -f k8s/frontend-deployment.yaml
+
+kubectl apply -f k8s/api-service.yaml
+kubectl apply -f k8s/logic-service.yaml
+kubectl apply -f k8s/frontend-service.yaml
+
+kubectl apply -f k8s/bookstore-ingress.yaml
 ```
 
-### 4. Dostęp do serwisów
+Następnie:
 
-| Serwis     | Adres                         |
-| ---------- | ----------------------------- |
-| Frontend   | http://localhost:3000         |
-| API        | http://localhost:3001         |
-| Logic      | http://localhost:3002         |
-| PostgreSQL | port 5432 (dostępny lokalnie) |
+- Dodaj `127.0.0.1 bookstore.local` do `/etc/hosts`
+- W przeglądarce otwórz: [http://bookstore.local](http://bookstore.local)
 
 ---
 
-## Funkcje aplikacji
+## Ingress
 
-- Wyświetlanie listy książek
-- Dodawanie do koszyka
-- Wysyłanie zamówienia z automatycznym rabatem
-- Historia zamówień (z datą i listą książek)
-- Trwałe przechowywanie danych w PostgreSQL
+Używany jest **NGINX Ingress Controller**. Adresy są skonfigurowane w `bookstore-ingress.yaml`. Ruch do `/` trafia do `frontend`, a `/orders` do `api`.
 
 ---
 
-## Struktura katalogów
+## Skalowanie – HPA
+
+Działa autoskalowanie dla `api`:
+
+```bash
+kubectl apply -f k8s/hpa-api.yaml
+```
+
+Można sprawdzić działanie:
+
+```bash
+kubectl get hpa
+kubectl top pods
+```
+
+---
+
+## Struktura katalogu
 
 ```
 bookstore-project/
-├── api/            # mikroserwis API (Express + PostgreSQL)
-├── logic/          # mikroserwis rabatowy (Express)
-├── frontend/       # aplikacja React (Vite)
-├── db/             # plik init.sql do inicjalizacji bazy
-├── docker-compose.yml
+├── k8s/                      # manifesty YAML dla K8s
+│   ├── db-*.yaml
+│   ├── api-*.yaml
+│   ├── logic-*.yaml
+│   ├── frontend-*.yaml
+│   └── bookstore-ingress.yaml
+├── frontend/                # aplikacja React
+├── api/                     # API Express
+├── logic/                   # mikroserwis rabatowy
+├── db/init.sql              # inicjalizacja bazy
 └── README.md
 ```
 
 ---
 
-## Docker
+## Funkcje aplikacji
 
-- Każdy mikroserwis ma własny `Dockerfile`
-- Wszystkie usługi są uruchamiane przez `docker-compose.yml`
-- Mikroserwisy połączone we wspólnej sieci (`bookstore-net`)
-- Baza danych korzysta z wolumenu (`db-data`)
-- `init.sql` automatycznie tworzy strukturę tabeli
+- Dodawanie książek do koszyka (z localStorage)
+- Zamówienia z rabatem (przez mikroserwis logic)
+- Historia zamówień (z bazy PostgreSQL)
+- Wersja uruchomiona w klastrze Kubernetes
+
+---
 
 ## Autor
 
-**Amelia Kanabaj**  
+**Amelia Kanabaj**
 _Projekt zaliczeniowy – Technologie Chmurowe, 2025_
