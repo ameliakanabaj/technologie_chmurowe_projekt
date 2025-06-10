@@ -8,4 +8,4 @@ Restart serwera:
 kubectl rollout restart deployment frontend
 
 Adres frontendu:
-http://localhost:30080
+http://localhost:3000
